@@ -9,8 +9,7 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
   },
   paper: {
-    height: 140,
-    width: 100,
+    height: 200,
   },
 }));
 
@@ -22,9 +21,9 @@ const ScheduleList = () => {
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
-            {data.map((value) => (
-                <Grid key={value} item>
-                  <ScheduleCard item={value} className={classes.paper}/>
+            {data.map((schedule) => (
+                <Grid key={schedule.id} item xs={4}>
+                  <ScheduleCard item={schedule} className={classes.paper}/>
                 </Grid>
             ))}
           </Grid>

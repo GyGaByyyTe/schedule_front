@@ -1,5 +1,46 @@
+const schedules = [
+  {
+    id: 1,
+    name: "test",
+    description: "test decs",
+    trigger: {
+      id: 1,
+      option: 1,
+    },
+    mandatory: {
+      state: true,
+      deadline: 1,
+    },
+    recurrence: {
+      state: true,
+      every: 5,
+      times: ["10:23"],
+    },
+    surveys: [1, 2, 5]
+  },
+  {
+    id: 2,
+    name: "new Schedule",
+    description: "test decs",
+    trigger: {
+      id: 2,
+      option: 1,
+    },
+    mandatory: {
+      state: true,
+      deadline: 1,
+    },
+    recurrence: {
+      state: true,
+      every: 5,
+      times: ["10:23", "11:50"],
+    },
+    surveys: []
+  }
+]
+
 const initialMainReducer = {
-  schedules: [0, 1, 2],
+  schedules: schedules,
   triggers: [
     {
       id: 1,
@@ -89,3 +130,5 @@ export const mainReducer = (state = initialMainReducer, action) => {
 
 export const getMainReducer = (state) => state.mainReducer;
 export const getSchedules = (state) => getMainReducer(state).schedules;
+export const getTriggers = (state) => getMainReducer(state).triggers;
+export const getDeadlines = (state) => getMainReducer(state).deadlines;

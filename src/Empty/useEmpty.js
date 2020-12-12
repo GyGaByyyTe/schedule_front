@@ -1,4 +1,4 @@
-const useEmptyList = () => {
+const useEmpty = () => {
   return {
     text: {
       title: "Create Schedule",
@@ -9,4 +9,4 @@ const useEmptyList = () => {
   }
 }
 
-export default useEmptyList;
+export default useEmpty;

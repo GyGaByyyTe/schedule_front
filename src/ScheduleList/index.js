@@ -19,7 +19,7 @@ const ScheduleList = () => {
   const { data } = useScheduleList();
 
   return (
-      <Grid container className={classes.root} spacing={2}>
+      <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
             {data.map((value) => (

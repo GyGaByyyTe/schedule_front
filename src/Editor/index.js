@@ -48,7 +48,7 @@ const CustomTab = withStyles((theme) => ({
 }))((props) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  editor: {
     height: "100%",
     position: "relative",
     flexGrow: 1,
@@ -83,7 +83,7 @@ const Editor = () => {
   };
 
   return (
-      <div className={classes.root}>
+      <div className={classes.editor}>
         <div className={classes.header}>
           <Button variant="contained" className={classes.button} onClick={onClick}>
             X

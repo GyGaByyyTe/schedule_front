@@ -36,10 +36,193 @@ const schedules = [
       times: ["10:23", "11:50"],
     },
     surveys: []
+  },
+  {
+    id: 3,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 4,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },  {
+    id: 5,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 6,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 7,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 8,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 9,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 10,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 11,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 12,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
+  },
+  {
+    id: 13,
+    name: "Start new Schedule",
+    description: "Hello world test decs",
+    trigger: {
+      id: 5,
+      option: 2,
+    },
+    mandatory: {
+      state: false,
+    },
+    recurrence: {
+      state: false,
+    },
+    surveys: []
   }
 ]
 
 const initialMainReducer = {
+  activeSchedule: {
+    name: "",
+    description: "",
+    trigger: { id: null },
+    mandatory: { state: false },
+    recurrence: { state: false },
+    surveys: []
+  },
   schedules: schedules,
   triggers: [
     {
@@ -119,10 +302,10 @@ const initialMainReducer = {
 
 export const mainReducer = (state = initialMainReducer, action) => {
   switch (action.type) {
-    case "x":
+    case "GET_SCHEDULES_SUCCESS":
       return { ...state, schedules: action.payload.body }
-    case "y":
-      return { ...state, schedules: action.payload.body }
+    case "SET_ACTIVE_SCHEDULE":
+      return { ...state, activeSchedule: action.payload.body }
     default:
       return state;
   }

@@ -13,11 +13,15 @@ const useStyles = makeStyles(() => ({
     background: "#fafbff",
   },
   container: {
+    paddingTop: "60px",
     width: "100%",
-    display: "flex",
-    alignItems: "center",
+    // display: "flex",
+    // alignItems: "center",
+    overflowY: "scroll",
   },
   sidebar: {
+    width: "40%",
+    maxWidth: 500,
     position: "relative",
   }
 }));

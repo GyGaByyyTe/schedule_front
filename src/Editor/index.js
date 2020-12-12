@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import {Button} from "@material-ui/core";
+import FormHandler from "../FormHandler";
 
 const CustomTabs = withStyles({
   root: {
@@ -49,34 +47,10 @@ const CustomTab = withStyles((theme) => ({
   selected: {},
 }))((props) => <Tab disableRipple {...props} />);
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-      <div
-          role="tabpanel"
-          hidden={value !== index}
-          id={`simple-tabpanel-${index}`}
-          aria-labelledby={`simple-tab-${index}`}
-          {...other}
-      >
-        {value === index && (
-            <Box p={3}>
-              <Typography>{children}</Typography>
-            </Box>
-        )}
-      </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: "100%",
+    position: "relative",
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
@@ -85,6 +59,16 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: 18,
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    padding: 0,
+    background: "#FAFBFF",
+    boxShadow: "inset 0px 1px 0px #E5E6EC"
   }
 }));
 
@@ -112,12 +96,13 @@ const Editor = () => {
             </CustomTabs>
           </div>
         </div>
-        <TabPanel value={value} index={0}>
-          First panel
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Second panel
-        </TabPanel>
+        <div className={classes.content}>
+          <FormHandler value={value}/>
+        </div>
+        <div className={classes.footer}>
+          <Button variant="contained" className={classes.button} onClick={onClick}>Close</Button>
+          <Button variant="contained" className={classes.button} onClick={onClick}>Save changes</Button>
+        </div>
       </div>
   );
 }

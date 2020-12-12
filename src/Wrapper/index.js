@@ -10,6 +10,7 @@ import Editor from "../Editor";
 const useStyles = makeStyles(() => ({
   wrapper: {
     display: "flex",
+    background: "#fafbff",
   },
   container: {
     width: "100%",

@@ -1,8 +1,8 @@
 import React from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import useScheduleList from "./useScheduleList";
+import ScheduleCard from "../ScheduleCard";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,7 +24,7 @@ const ScheduleList = () => {
           <Grid container justify="center" spacing={2}>
             {data.map((value) => (
                 <Grid key={value} item>
-                  <Paper className={classes.paper}/>
+                  <ScheduleCard item={value} className={classes.paper}/>
                 </Grid>
             ))}
           </Grid>

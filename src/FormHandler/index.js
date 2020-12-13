@@ -3,7 +3,6 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import CustomInput from "../CustomFields/CustomInput";
-import useFormHandler from "./useFormHandler";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CustomAutocomplete from "../CustomFields/CustomAutocomplete";
@@ -58,12 +57,10 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-
-const FormHandler = ({ value }) => {
-  const { schedule } = useFormHandler();
+const FormHandler = ({ tabValue, schedule }) => {
   return (
       <div className="FormHandler">
-        <TabPanel value={value} index={0}>
+        <TabPanel value={tabValue} index={0}>
           <CustomLabel id="name" text="Schedule Name" required/>
           <CustomInput id="name"
                        required
@@ -131,7 +128,7 @@ const FormHandler = ({ value }) => {
           </React.Fragment>
           }
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={tabValue} index={1}>
           Second panelolo
         </TabPanel>
       </div>

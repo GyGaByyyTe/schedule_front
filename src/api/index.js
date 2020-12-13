@@ -7,7 +7,7 @@ export const createSchedule = (schedule) => fetch("/schedule/", {
   body: JSON.stringify(schedule)
 })
 
-export const editSchedule = (schedule) => fetch("/schedule/", {
+export const editSchedule = (schedule) => fetch(`/schedule/${schedule.id}`, {
   method: "PUT",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(schedule)

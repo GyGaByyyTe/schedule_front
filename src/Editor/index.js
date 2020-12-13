@@ -86,12 +86,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Editor = () => {
   const classes = useStyles();
-  const { tabValue, handleTabChange, onClick } = useEditor();
+  const { tabValue, schedule, handleTabChange, onClose, onSave } = useEditor();
 
   return (
       <div className={classes.editor}>
         <div className={classes.header}>
-          <Button variant="contained" className={classes.button} onClick={onClick}>
+          <Button variant="contained" className={classes.button} onClick={onClose}>
             X
           </Button>
           <div className={classes.content}>
@@ -103,11 +103,11 @@ const Editor = () => {
           </div>
         </div>
         <div className={classes.main}>
-          <FormHandler value={tabValue}/>
+          <FormHandler tabValue={tabValue} schedule={schedule}/>
         </div>
         <div className={classes.footer}>
-          <Button variant="contained" className={classes.button} onClick={onClick}>Close</Button>
-          <Button variant="contained" className={classes.button} onClick={onClick}>Save changes</Button>
+          <Button variant="contained" className={classes.button} onClick={onClose}>Close</Button>
+          <Button variant="contained" className={classes.button} onClick={onSave}>Save changes</Button>
         </div>
       </div>
   );

@@ -36,7 +36,7 @@ const ScheduleList = () => {
   return (
       <Grid container className={classes.root} justify="center">
         <Grid item xs={11}>
-          <Grid container justify="center" spacing={2}>
+          <Grid container justify="flex-start" spacing={2}>
             <Grid item xs={12}>
               <div className={classes.header}>
                 <span>{`Schedules(${data.length})`}</span>

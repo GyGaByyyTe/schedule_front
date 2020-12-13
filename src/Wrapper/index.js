@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
     background: "#fafbff",
   },
   container: {
-    paddingTop: "60px",
+    padding: "60px 0",
     width: "100%",
     // display: "flex",
     // alignItems: "center",

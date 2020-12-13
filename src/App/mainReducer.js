@@ -15,7 +15,7 @@ const schedules = [
     },
     recurrence: {
       state: true,
-      every: 5,
+      everyDays: 5,
       times: ["10:23"],
     },
     surveys: [1, 2, 5]
@@ -34,7 +34,7 @@ const schedules = [
     },
     recurrence: {
       state: true,
-      every: 5,
+      everyDays: 5,
       times: ["10:23", "11:50"],
     },
     surveys: []
@@ -64,7 +64,8 @@ const schedules = [
       option: 2,
     },
     mandatory: {
-      state: false,
+      state: true,
+      deadline: 4,
     },
     recurrence: {
       state: false,
@@ -294,11 +295,11 @@ const initialMainReducer = {
     }
   ],
   deadlines: [
-    { id: 1, value: "30m" },
-    { id: 2, value: "1h" },
-    { id: 3, value: "6h" },
-    { id: 4, value: "7d" },
-    { id: 5, value: "no deadline" },
+    { id: 1, name: "30m" },
+    { id: 2, name: "1h" },
+    { id: 3, name: "6h" },
+    { id: 4, name: "7d" },
+    { id: 5, name: "no deadline" },
   ],
 }
 

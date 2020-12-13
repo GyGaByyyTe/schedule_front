@@ -6,6 +6,7 @@ import useScheduleCard from "./useScheduleCard";
 
 const useStyles = makeStyles(() => ({
   card: {
+    cursor: "pointer",
     display: "flex",
     flexDirection: "column",
     boxSizing: "border-box",

@@ -3,14 +3,13 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import InputLabel from "@material-ui/core/InputLabel";
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CustomInput from "../CustomInput";
 import useFormHandler from "./useFormHandler";
-import TextField from "@material-ui/core/TextField";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CustomAutocomplete from "../CustomFields/CustomAutocomplete";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,7 +48,6 @@ const FormHandler = ({ value }) => {
           </InputLabel>
           <CustomInput required
                        id="name"
-                       name="name"
                        value={schedule.name.value}
                        onChange={schedule.name.onChange}/>
 
@@ -57,32 +55,36 @@ const FormHandler = ({ value }) => {
             Description
           </InputLabel>
           <CustomInput id="description"
-                       name="description"
                        value={schedule.description.value}
                        onChange={schedule.description.onChange}/>
 
           <InputLabel shrink htmlFor="trigger">
             Trigger Event
           </InputLabel>
-          <Autocomplete
-              value={schedule.triggers.value}
-              options={schedule.triggers.options}
-              getOptionLabel={(option) => option.title}
-              getOptionSelected={(option, newValue) =>
-                  option?.value === newValue?.value}
-              onChange={(event, newValue) =>
-                  schedule.triggers.onChange(newValue)}
-              style={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} variant="outlined"/>}
-          />
+          <CustomAutocomplete id="trigger" model={schedule.triggers}/>
+
+          {schedule.triggerExtension.label &&
+          <InputLabel shrink htmlFor="triggerExtension">
+            {schedule.triggerExtension.label}
+          </InputLabel>
+          }
+          {schedule.triggerExtension.options
+              ? (<CustomAutocomplete id="triggerExtension" model={schedule.triggerExtension}/>)
+              : schedule.triggerExtension.value !== null &&
+              (<CustomInput id="triggerExtension"
+                            inputProps={{ min: "0", step: "1" }}
+                            endAdornment={<InputAdornment
+                                position="end">Days</InputAdornment>}
+                            type="number"
+                            value={schedule.triggerExtension.value}
+                            onChange={schedule.triggerExtension.onChange}/>)
+          }
 
           <InputLabel shrink htmlFor="mandatory">
             Mandatory (is it required to fill in the survey?)
           </InputLabel>
-          <RadioGroup id="mandatory"
-                      name="mandatory"
+          <RadioGroup id="mandatory" row name="mandatory"
                       value={schedule.mandatory.value}
-                      row
                       onChange={schedule.mandatory.onChange}>
             <FormControlLabel value="false" control={<Radio/>} label="No"/>
             <FormControlLabel value="true" control={<Radio/>} label="Yes"/>
@@ -92,27 +94,15 @@ const FormHandler = ({ value }) => {
             <InputLabel shrink htmlFor="deadline">
               Deadline to fill in the survey:
             </InputLabel>
-            <Autocomplete
-                value={schedule.deadline.value}
-                options={schedule.deadline.options}
-                getOptionLabel={(option) => option.title}
-                getOptionSelected={(option, newValue) =>
-                    option?.value === newValue?.value}
-                onChange={(event, newValue) =>
-                    schedule.deadline.onChange(newValue)}
-                style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} variant="outlined"/>}
-            />
+            <CustomAutocomplete id="deadline" model={schedule.deadline}/>
           </React.Fragment>
           }
 
           <InputLabel shrink htmlFor="recurrence">
             Recurrence
           </InputLabel>
-          <RadioGroup id="recurrence"
-                      name="recurrence"
+          <RadioGroup id="recurrence" row
                       value={schedule.recurrence.value}
-                      row
                       onChange={schedule.recurrence.onChange}>
             <FormControlLabel value="false" control={<Radio/>} label="No"/>
             <FormControlLabel value="true" control={<Radio/>} label="Yes"/>
@@ -122,7 +112,7 @@ const FormHandler = ({ value }) => {
             <InputLabel shrink htmlFor="everyDays">
               Every
             </InputLabel>
-            <CustomInput id="everyDays" name="everyDays"
+            <CustomInput id="everyDays"
                          inputProps={{ min: "0", step: "1" }}
                          endAdornment={<InputAdornment position="end">Days</InputAdornment>}
                          type="number"
@@ -134,17 +124,14 @@ const FormHandler = ({ value }) => {
             </InputLabel>
             {schedule.time.value.map((time, id) => (
                 <CustomInput id={`${time}#${id}`}
-                             inputProps={{
-                               step: 300, // 5 min
-                             }}
+                             inputProps={{ step: 300 }}
                              type="time"
                              value={time}
                              onChange={schedule.time.onChange}/>
             ))}
-            <CustomInput
-                type="button"
-                value="+"
-                onClick={schedule.time.addTime}/>
+            <CustomInput type="button"
+                         value="+"
+                         onClick={schedule.time.addTime}/>
 
           </React.Fragment>
           }

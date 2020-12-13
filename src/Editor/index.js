@@ -86,8 +86,8 @@ const Editor = () => {
           <div>
             <h3 className={classes.title}>Edit Schedule</h3>
             <CustomTabs value={tabValue} onChange={handleTabChange}>
-              <CustomTab label="Item One"/>
-              <CustomTab label="Item Two"/>
+              <CustomTab label="General"/>
+              <CustomTab label="Assigned Surveys"/>
             </CustomTabs>
           </div>
         </div>

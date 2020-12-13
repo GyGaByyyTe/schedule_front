@@ -1,19 +1,38 @@
+import {useEffect, useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import {getActiveSchedule, getDeadlines, getTriggers} from "../App/mainReducer";
-import {useEffect, useMemo, useState} from "react";
 
 const defaultOption = { title: "", value: 0 };
 
 const fillOption = (field) => field ? { title: field.name, value: field.id } : defaultOption;
 
+const getTriggerExtension = (trigger, schedule) => {
+  if (trigger?.select) {
+    return {
+      value: fillOption(trigger.select.options.find(o => o.id === schedule.trigger.option)),
+      options: trigger.select.options,
+    }
+  } else if (trigger?.number) {
+    return { value: schedule.trigger.option }
+  } else {
+    return {
+      value: null,
+    }
+  }
+}
+
 const init = (schedule, triggerArray = [], deadlineArray = []) => {
   const trigger = triggerArray.find(t => t.id === schedule.trigger.id);
+  const triggerExtension = trigger?.select || trigger?.number || null;
+  const triggerExtensionLabel = triggerExtension?.label || "";
   const isMandatory = schedule.mandatory.state;
   const deadline = isMandatory && deadlineArray.find(d => d.id === schedule.mandatory.deadline);
   return {
     name: schedule.name || "",
     description: schedule.description || "",
     trigger: fillOption(trigger),
+    triggerExtension: getTriggerExtension(trigger, schedule),
+    triggerExtensionLabel: triggerExtensionLabel,
     mandatory: isMandatory ? "true" : "false",
     deadline: fillOption(deadline),
     recurrence: schedule.recurrence.state ? "true" : "false",
@@ -28,11 +47,12 @@ const useFormHandler = () => {
   const activeSchedule = useSelector(getActiveSchedule);
   const triggers = useSelector(getTriggers);
   const deadlines = useSelector(getDeadlines);
-
   const initSchedule = init(activeSchedule, triggers, deadlines);
   const [name, setName] = useState(initSchedule.name);
   const [description, setDescription] = useState(initSchedule.description);
   const [trigger, setTrigger] = useState(initSchedule.trigger);
+  const [triggerExtension, setTriggerExtension] = useState(initSchedule.triggerExtension);
+  const [triggerExtensionLabel, setTriggerExtensionLabel] = useState(initSchedule.triggerExtensionLabel);
   const [mandatory, setMandatory] = useState(initSchedule.mandatory);
   const [deadline, setDeadline] = useState(initSchedule.deadline);
   const [recurrence, setRecurrence] = useState(initSchedule.recurrence);
@@ -51,11 +71,25 @@ const useFormHandler = () => {
     setTimes(newSchedule.times);
   }, [activeSchedule, triggers, deadlines])
 
+  useEffect(() => {
+    if (trigger) {
+      const newSchedule = init({
+        ...activeSchedule, trigger: {
+          id: trigger.value,
+          option: activeSchedule.trigger.option || 0
+        }
+      }, triggers, deadlines);
+      setTriggerExtension(newSchedule.triggerExtension);
+      setTriggerExtensionLabel(newSchedule.triggerExtensionLabel);
+    }
+  }, [trigger, triggers, deadlines, activeSchedule])
+
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
-    // console.log(e.target);
     setter(value);
   }
+
+  const checkNewSelectValue = (newValue) => newValue === null ? defaultOption : newValue;
 
   return {
     schedule: {
@@ -70,7 +104,27 @@ const useFormHandler = () => {
       triggers: {
         options: useMemo(() => [defaultOption, ...triggers.map(t => ({ title: t.name, value: t.id }))], [triggers]),
         value: trigger,
-        onChange: setTrigger,
+        onChange: (newValue) => setTrigger(checkNewSelectValue(newValue)),
+      },
+      triggerExtension: {
+        label: triggerExtensionLabel,
+        value: triggerExtension?.options ? {
+          title: triggerExtension.value.title,
+          value: triggerExtension.value.value,
+        } : triggerExtension.value,
+        options: useMemo(() => triggerExtension?.options
+            ? [defaultOption, ...triggerExtension.options.map(t => ({
+              title: t.name,
+              value: t.id
+            }))]
+            : null, [triggerExtension]),
+        onChange: triggerExtension?.options
+            ? (newValue) =>
+                setTriggerExtension({
+                  ...triggerExtension,
+                  value: checkNewSelectValue(newValue)
+                })
+            : handleInputChange((value) => setTriggerExtension({ value })),
       },
       mandatory: {
         value: mandatory,

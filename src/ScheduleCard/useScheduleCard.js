@@ -13,7 +13,7 @@ const useScheduleCard = ({ schedule }) => {
       description: schedule.description,
       trigger: {
         name: triggerData.name,
-        option: triggerOption.name,
+        option: triggerOption?.name,
       },
       mandatory: schedule.mandatory.state ? "Mandatory" : "Optional",
       recurrence: recurrence.state ? `Every ${recurrence.everyDays} days${recTimes}` : "Once",

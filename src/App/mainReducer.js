@@ -25,7 +25,7 @@ const schedules = [
     name: "new Schedule",
     description: "test decs",
     trigger: {
-      id: 2,
+      id: 4,
       option: 1,
     },
     mandatory: {
@@ -71,7 +71,8 @@ const schedules = [
       state: false,
     },
     surveys: []
-  }, {
+  },
+  {
     id: 5,
     name: "Start new Schedule",
     description: "Hello world test decs",
@@ -89,102 +90,6 @@ const schedules = [
   },
   {
     id: 6,
-    name: "Start new Schedule",
-    description: "Hello world test decs",
-    trigger: {
-      id: 5,
-      option: 2,
-    },
-    mandatory: {
-      state: false,
-    },
-    recurrence: {
-      state: false,
-    },
-    surveys: []
-  },
-  {
-    id: 7,
-    name: "Start new Schedule",
-    description: "Hello world test decs",
-    trigger: {
-      id: 5,
-      option: 2,
-    },
-    mandatory: {
-      state: false,
-    },
-    recurrence: {
-      state: false,
-    },
-    surveys: []
-  },
-  {
-    id: 8,
-    name: "Start new Schedule",
-    description: "Hello world test decs",
-    trigger: {
-      id: 5,
-      option: 2,
-    },
-    mandatory: {
-      state: false,
-    },
-    recurrence: {
-      state: false,
-    },
-    surveys: []
-  },
-  {
-    id: 9,
-    name: "Start new Schedule",
-    description: "Hello world test decs",
-    trigger: {
-      id: 5,
-      option: 2,
-    },
-    mandatory: {
-      state: false,
-    },
-    recurrence: {
-      state: false,
-    },
-    surveys: []
-  },
-  {
-    id: 10,
-    name: "Start new Schedule",
-    description: "Hello world test decs",
-    trigger: {
-      id: 5,
-      option: 2,
-    },
-    mandatory: {
-      state: false,
-    },
-    recurrence: {
-      state: false,
-    },
-    surveys: []
-  },
-  {
-    id: 11,
-    name: "Start new Schedule",
-    description: "Hello world test decs",
-    trigger: {
-      id: 5,
-      option: 2,
-    },
-    mandatory: {
-      state: false,
-    },
-    recurrence: {
-      state: false,
-    },
-    surveys: []
-  },
-  {
-    id: 12,
     name: "Start new Schedule",
     description: "Hello world test decs",
     trigger: {

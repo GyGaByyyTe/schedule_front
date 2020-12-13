@@ -4,6 +4,7 @@ import {InputBase} from "@material-ui/core";
 const CustomInput = withStyles((theme) => ({
   root: {
     width: "100%",
+    // background: "white",
     "& input[type='time']": { width: "auto" },
     "& input[type='button']": { width: "auto" }
   },

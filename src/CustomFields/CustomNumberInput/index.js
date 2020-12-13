@@ -1,5 +1,5 @@
 import InputAdornment from "@material-ui/core/InputAdornment";
-import CustomInput from "../../CustomInput";
+import CustomInput from "../CustomInput";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 

@@ -1,0 +1,8 @@
+.FormHandler {
+    margin-bottom: 120px;
+}
+
+.FormHandler input[type='time'] {
+    padding: 10px 8px;
+    font-size: 13px;
+}

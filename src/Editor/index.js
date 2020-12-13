@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     position: "relative",
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#FAFBFF",
   },
   button: {
     background: "none",
@@ -61,11 +61,16 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     display: "flex",
+    background: "white"
   },
   title: {
     color: "rgb(39,52,109)",
     fontSize: 18,
     paddingLeft: 20,
+  },
+  main: {
+    overflowY: "scroll",
+    height: "100%",
   },
   footer: {
     position: "absolute",
@@ -97,7 +102,7 @@ const Editor = () => {
             </CustomTabs>
           </div>
         </div>
-        <div className={classes.content}>
+        <div className={classes.main}>
           <FormHandler value={tabValue}/>
         </div>
         <div className={classes.footer}>

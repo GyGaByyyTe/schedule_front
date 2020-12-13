@@ -2,8 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import InputLabel from "@material-ui/core/InputLabel";
-import CustomInput from "../CustomInput";
+import CustomInput from "../CustomFields/CustomInput";
 import useFormHandler from "./useFormHandler";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -11,6 +10,9 @@ import CustomAutocomplete from "../CustomFields/CustomAutocomplete";
 import {withStyles} from "@material-ui/core/styles";
 import CustomRadio from "../CustomFields/CustomRadio";
 import CustomNumberInput from "../CustomFields/CustomNumberInput";
+import Grid from "@material-ui/core/Grid";
+import CustomLabel from "../CustomFields/CustomLabel";
+import "./index.css";
 
 const TabPanel = withStyles((theme) => ({
   root: {
@@ -35,12 +37,11 @@ const TabPanel = withStyles((theme) => ({
 }))((props) => {
   const { children, value, index, classes, ...other } = props;
   return (
-      <div
-          role="tabpanel"
-          hidden={value !== index}
-          id={`simple-tabpanel-${index}`}
-          aria-labelledby={`simple-tab-${index}`}
-          {...other}
+      <div role="tabpanel"
+           hidden={value !== index}
+           id={`simple-tabpanel-${index}`}
+          // aria-labelledby={`simple-tab-${index}`}
+           {...other}
       >
         {value === index && (
             <Box p={3}>
@@ -61,32 +62,24 @@ TabPanel.propTypes = {
 const FormHandler = ({ value }) => {
   const { schedule } = useFormHandler();
   return (
-      <>
+      <div className="FormHandler">
         <TabPanel value={value} index={0}>
-          <InputLabel shrink htmlFor="name">
-            Name
-          </InputLabel>
-          <CustomInput required
-                       id="name"
+          <CustomLabel id="name" text="Schedule Name" required/>
+          <CustomInput id="name"
+                       required
                        value={schedule.name.value}
                        onChange={schedule.name.onChange}/>
 
-          <InputLabel shrink htmlFor="description">
-            Description
-          </InputLabel>
+          <CustomLabel id="description" text="Description"/>
           <CustomInput id="description"
                        value={schedule.description.value}
                        onChange={schedule.description.onChange}/>
 
-          <InputLabel shrink htmlFor="trigger">
-            Trigger Event
-          </InputLabel>
-          <CustomAutocomplete id="trigger" model={schedule.triggers}/>
+          <CustomLabel id="trigger" text="Trigger Event" required/>
+          <CustomAutocomplete id="trigger" required model={schedule.triggers}/>
 
           {schedule.triggerExtension.label &&
-          <InputLabel shrink htmlFor="triggerExtension">
-            {schedule.triggerExtension.label}
-          </InputLabel>
+          <CustomLabel id="triggerExtension" text={schedule.triggerExtension.label}/>
           }
           {schedule.triggerExtension.options
               ? (<CustomAutocomplete id="triggerExtension" model={schedule.triggerExtension}/>)
@@ -94,9 +87,7 @@ const FormHandler = ({ value }) => {
               (<CustomNumberInput id="triggerExtension" model={schedule.triggerExtension}/>)
           }
 
-          <InputLabel shrink htmlFor="mandatory">
-            Mandatory (is it required to fill in the survey?)
-          </InputLabel>
+          <CustomLabel id="mandatory" text="Mandatory (is it required to fill in the survey?)"/>
           <RadioGroup id="mandatory" row name="mandatory"
                       value={schedule.mandatory.value}
                       onChange={schedule.mandatory.onChange}>
@@ -105,16 +96,12 @@ const FormHandler = ({ value }) => {
           </RadioGroup>
           {schedule.deadline.options.length > 0 &&
           <React.Fragment>
-            <InputLabel shrink htmlFor="deadline">
-              Deadline to fill in the survey:
-            </InputLabel>
+            <CustomLabel id="deadline" text="Deadline to fill in the survey:"/>
             <CustomAutocomplete id="deadline" model={schedule.deadline}/>
           </React.Fragment>
           }
 
-          <InputLabel shrink htmlFor="recurrence">
-            Recurrence
-          </InputLabel>
+          <CustomLabel id="recurrence" text="Recurrence"/>
           <RadioGroup id="recurrence" row
                       value={schedule.recurrence.value}
                       onChange={schedule.recurrence.onChange}>
@@ -123,32 +110,32 @@ const FormHandler = ({ value }) => {
           </RadioGroup>
           {schedule.recurrence.showDays &&
           <React.Fragment>
-            <InputLabel shrink htmlFor="everyDays">
-              Every
-            </InputLabel>
+            <CustomLabel id="everyDays" text="Every"/>
             <CustomNumberInput id="everyDays" model={schedule.everyDays}/>
 
-            <InputLabel shrink htmlFor="at">
-              At
-            </InputLabel>
-            {schedule.time.value.map((time, id) => (
-                <CustomInput id={`${time}#${id}`}
-                             inputProps={{ step: 300 }}
-                             type="time"
-                             value={time}
-                             onChange={schedule.time.onChange}/>
-            ))}
-            <CustomInput type="button"
-                         value="+"
-                         onClick={schedule.time.addTime}/>
-
+            <CustomLabel id="at" text="At"/>
+            <Grid container justify="flex-start" spacing={1}>
+              {schedule.time.value.map((time, id) => (
+                  <Grid key={`${time}#${id}`} item lg={3} md={4} sm={6} xs={12}>
+                    <CustomInput type="time"
+                                 inputProps={{ step: 300 }}
+                                 value={time}
+                                 onChange={schedule.time.onChange}/>
+                  </Grid>
+              ))}
+              <Grid key="button#$" item lg={3} md={4} sm={6} xs={12}>
+                <CustomInput type="button"
+                             value="+"
+                             onClick={schedule.time.addTime}/>
+              </Grid>
+            </Grid>
           </React.Fragment>
           }
         </TabPanel>
         <TabPanel value={value} index={1}>
           Second panelolo
         </TabPanel>
-      </>
+      </div>
   )
 }
 

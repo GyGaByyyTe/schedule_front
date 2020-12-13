@@ -10,8 +10,14 @@ const useStyles = makeStyles(() => ({
     }
   }
 }));
+const useTextStyles = makeStyles(() => ({
+  root: {
+    background: "white",
+  }
+}));
 const CustomAutocomplete = ({ id, model }) => {
   const classes = useStyles();
+  const textClasses = useTextStyles();
 
   return <Autocomplete
       id={id}
@@ -21,8 +27,7 @@ const CustomAutocomplete = ({ id, model }) => {
       getOptionLabel={(option) => option.title}
       getOptionSelected={(option, newValue) => option?.value === newValue?.value}
       onChange={(event, newValue) => model.onChange(newValue)}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} variant="outlined"/>}
+      renderInput={(params) => <TextField {...params} classes={textClasses} variant="outlined"/>}
   />
 }
 

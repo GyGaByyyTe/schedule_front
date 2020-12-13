@@ -46,7 +46,7 @@ const ScheduleList = () => {
               </div>
             </Grid>
             {data.map((schedule) => (
-                <Grid key={schedule.id} item xs={4} onClick={onClickSchedule(schedule)}>
+                <Grid key={schedule.id} item lg={4} md={5} sm={6} xs={12} onClick={onClickSchedule(schedule)}>
                   <ScheduleCard item={schedule} className={classes.paper}/>
                 </Grid>
             ))}

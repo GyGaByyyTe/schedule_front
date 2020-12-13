@@ -21,6 +21,7 @@ const useStyles = makeStyles(() => ({
     minWidth: "40%",
     maxWidth: 500,
     position: "relative",
+    background: "#FAFBFF",
     boxShadow: "0px 0px 60px rgba(39, 52, 109, 0.1)",
   }
 }));

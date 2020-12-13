@@ -4,6 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {Button} from "@material-ui/core";
 import FormHandler from "../FormHandler";
+import useEditor from "./useEditor";
 
 const CustomTabs = withStyles({
   root: {
@@ -74,13 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Editor = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const onClick = () => console.log('close editor')
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const { tabValue, handleTabChange, onClick } = useEditor();
 
   return (
       <div className={classes.editor}>
@@ -90,14 +85,14 @@ const Editor = () => {
           </Button>
           <div>
             <h3 className={classes.title}>Edit Schedule</h3>
-            <CustomTabs value={value} onChange={handleChange} aria-label="simple tabs example">
+            <CustomTabs value={tabValue} onChange={handleTabChange}>
               <CustomTab label="Item One"/>
               <CustomTab label="Item Two"/>
             </CustomTabs>
           </div>
         </div>
         <div className={classes.content}>
-          <FormHandler value={value}/>
+          <FormHandler value={tabValue}/>
         </div>
         <div className={classes.footer}>
           <Button variant="contained" className={classes.button} onClick={onClick}>Close</Button>

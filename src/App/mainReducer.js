@@ -1,3 +1,5 @@
+import {ScheduleActions} from "./actions";
+
 const schedules = [
   {
     id: 1,
@@ -68,7 +70,7 @@ const schedules = [
       state: false,
     },
     surveys: []
-  },  {
+  }, {
     id: 5,
     name: "Start new Schedule",
     description: "Hello world test decs",
@@ -304,7 +306,7 @@ export const mainReducer = (state = initialMainReducer, action) => {
   switch (action.type) {
     case "GET_SCHEDULES_SUCCESS":
       return { ...state, schedules: action.payload.body }
-    case "SET_ACTIVE_SCHEDULE":
+    case ScheduleActions.SET_ACTIVE_SCHEDULE:
       return { ...state, activeSchedule: action.payload.body }
     default:
       return state;
@@ -312,6 +314,7 @@ export const mainReducer = (state = initialMainReducer, action) => {
 }
 
 export const getMainReducer = (state) => state.mainReducer;
+export const getActiveSchedule = (state) => getMainReducer(state).activeSchedule;
 export const getSchedules = (state) => getMainReducer(state).schedules;
 export const getTriggers = (state) => getMainReducer(state).triggers;
 export const getDeadlines = (state) => getMainReducer(state).deadlines;

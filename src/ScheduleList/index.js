@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
 
 const ScheduleList = () => {
   const classes = useStyles();
-  const { data } = useScheduleList();
+  const { data, onClickSchedule } = useScheduleList();
 
   return (
       <Grid container className={classes.root} justify="center">
@@ -46,7 +46,7 @@ const ScheduleList = () => {
               </div>
             </Grid>
             {data.map((schedule) => (
-                <Grid key={schedule.id} item xs={4}>
+                <Grid key={schedule.id} item xs={4} onClick={onClickSchedule(schedule)}>
                   <ScheduleCard item={schedule} className={classes.paper}/>
                 </Grid>
             ))}

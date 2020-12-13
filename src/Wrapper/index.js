@@ -15,14 +15,13 @@ const useStyles = makeStyles(() => ({
   container: {
     padding: "60px 0",
     width: "100%",
-    // display: "flex",
-    // alignItems: "center",
     overflowY: "scroll",
   },
   sidebar: {
-    width: "40%",
+    minWidth: "40%",
     maxWidth: 500,
     position: "relative",
+    boxShadow: "0px 0px 60px rgba(39, 52, 109, 0.1)",
   }
 }));
 

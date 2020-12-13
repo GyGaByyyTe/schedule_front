@@ -7,13 +7,33 @@ import CustomInput from "../CustomInput";
 import useFormHandler from "./useFormHandler";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import CustomAutocomplete from "../CustomFields/CustomAutocomplete";
+import {withStyles} from "@material-ui/core/styles";
+import CustomRadio from "../CustomFields/CustomRadio";
+import CustomNumberInput from "../CustomFields/CustomNumberInput";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
+const TabPanel = withStyles((theme) => ({
+  root: {
+    padding: 0,
+    textTransform: 'none',
+    minWidth: "auto",
+    minHeight: "unset",
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing(4),
+    color: "#A5AAC1",
+    fontSize: 12,
+    '&:hover': {
+      color: '#40a9ff',
+      opacity: 1,
+    },
+    '&$selected': {
+      minWidth: "unset",
+      color: 'black',
+    },
+  },
+  selected: {},
+}))((props) => {
+  const { children, value, index, classes, ...other } = props;
   return (
       <div
           role="tabpanel"
@@ -29,7 +49,7 @@ function TabPanel(props) {
         )}
       </div>
   );
-}
+})
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -71,13 +91,7 @@ const FormHandler = ({ value }) => {
           {schedule.triggerExtension.options
               ? (<CustomAutocomplete id="triggerExtension" model={schedule.triggerExtension}/>)
               : schedule.triggerExtension.value !== null &&
-              (<CustomInput id="triggerExtension"
-                            inputProps={{ min: "0", step: "1" }}
-                            endAdornment={<InputAdornment
-                                position="end">Days</InputAdornment>}
-                            type="number"
-                            value={schedule.triggerExtension.value}
-                            onChange={schedule.triggerExtension.onChange}/>)
+              (<CustomNumberInput id="triggerExtension" model={schedule.triggerExtension}/>)
           }
 
           <InputLabel shrink htmlFor="mandatory">
@@ -86,8 +100,8 @@ const FormHandler = ({ value }) => {
           <RadioGroup id="mandatory" row name="mandatory"
                       value={schedule.mandatory.value}
                       onChange={schedule.mandatory.onChange}>
-            <FormControlLabel value="false" control={<Radio/>} label="No"/>
-            <FormControlLabel value="true" control={<Radio/>} label="Yes"/>
+            <FormControlLabel value="false" control={<CustomRadio/>} label="No"/>
+            <FormControlLabel value="true" control={<CustomRadio/>} label="Yes"/>
           </RadioGroup>
           {schedule.deadline.options.length > 0 &&
           <React.Fragment>
@@ -104,20 +118,15 @@ const FormHandler = ({ value }) => {
           <RadioGroup id="recurrence" row
                       value={schedule.recurrence.value}
                       onChange={schedule.recurrence.onChange}>
-            <FormControlLabel value="false" control={<Radio/>} label="No"/>
-            <FormControlLabel value="true" control={<Radio/>} label="Yes"/>
+            <FormControlLabel value="false" control={<CustomRadio/>} label="No"/>
+            <FormControlLabel value="true" control={<CustomRadio/>} label="Yes"/>
           </RadioGroup>
           {schedule.recurrence.showDays &&
           <React.Fragment>
             <InputLabel shrink htmlFor="everyDays">
               Every
             </InputLabel>
-            <CustomInput id="everyDays"
-                         inputProps={{ min: "0", step: "1" }}
-                         endAdornment={<InputAdornment position="end">Days</InputAdornment>}
-                         type="number"
-                         value={schedule.everyDays.value}
-                         onChange={schedule.everyDays.onChange}/>
+            <CustomNumberInput id="everyDays" model={schedule.everyDays}/>
 
             <InputLabel shrink htmlFor="at">
               At

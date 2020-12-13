@@ -9,6 +9,9 @@ import useEditor from "./useEditor";
 const CustomTabs = withStyles({
   root: {
     borderBottom: '1px solid #e8e8e8',
+    minHeight: "unset",
+    height: 25,
+    paddingLeft: 20,
   },
   indicator: {
     backgroundColor: '#2B63FF',
@@ -17,32 +20,21 @@ const CustomTabs = withStyles({
 
 const CustomTab = withStyles((theme) => ({
   root: {
+    padding: 0,
     textTransform: 'none',
-    minWidth: 72,
+    minWidth: "auto",
+    minHeight: "unset",
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(4),
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
+    color: "#A5AAC1",
+    fontSize: 12,
     '&:hover': {
       color: '#40a9ff',
       opacity: 1,
     },
     '&$selected': {
-      color: '#1890ff',
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-    '&:focus': {
-      color: '#40a9ff',
+      minWidth: "unset",
+      color: 'black',
     },
   },
   selected: {},
@@ -55,11 +47,25 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  button: {
+    background: "none",
+    borderRadius: 0,
+    borderBottom: "1px solid #E5E6EC",
+    borderRight: "1px solid #E5E6EC",
+    boxShadow: "none",
+    color: "rgb(165,170,193)",
+  },
+  content: {
+    width: "100%",
+    overflow: "hidden",
+  },
   header: {
     display: "flex",
   },
   title: {
+    color: "rgb(39,52,109)",
     fontSize: 18,
+    paddingLeft: 20,
   },
   footer: {
     position: "absolute",
@@ -83,7 +89,7 @@ const Editor = () => {
           <Button variant="contained" className={classes.button} onClick={onClick}>
             X
           </Button>
-          <div>
+          <div className={classes.content}>
             <h3 className={classes.title}>Edit Schedule</h3>
             <CustomTabs value={tabValue} onChange={handleTabChange}>
               <CustomTab label="General"/>

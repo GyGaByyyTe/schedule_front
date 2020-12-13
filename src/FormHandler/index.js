@@ -115,7 +115,7 @@ const FormHandler = ({ tabValue, schedule }) => {
               {schedule.time.value.map((time, id) => (
                   <Grid key={`${time}#${id}`} item lg={3} md={4} sm={6} xs={12}>
                     <CustomInput type="time"
-                                 inputProps={{ step: 300, onChange: schedule.time.onChange }}
+                                 inputProps={{ step: 300, onChange: schedule.time.onChange(id) }}
                                  value={time}/>
                   </Grid>
               ))}

@@ -143,8 +143,13 @@ const useEditor = () => {
       },
       time: {
         value: times,
-        onChange: (e) => console.log(e.target),
-        addTime: () => setTimes([...times, new Date().toLocaleTimeString('en-US', {
+        onChange: (index) => (e) => {
+          const { value } = e.target;
+          const oldTimes = [...times];
+          oldTimes[index] = value;
+          setTimes(oldTimes);
+        },
+        addTime: () => setTimes([...times, new Date().toLocaleTimeString('ru-Ru', {
           hour12: false,
           hour: "numeric",
           minute: "numeric"

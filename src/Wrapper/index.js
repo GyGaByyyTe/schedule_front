@@ -7,6 +7,7 @@ import Empty from "../Empty";
 import ScheduleList from "../ScheduleList";
 import Editor from "../Editor";
 import {actionGetScheduleList, actionSetActiveSchedule} from "../App/actions";
+import io from 'socket.io-client';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -31,10 +32,12 @@ const Wrapper = ({ className }) => {
   const classes = useStyles();
   const schedules = useSelector(getSchedules);
   const dispatch = useDispatch();
-  const onCreateNew = () => dispatch(actionSetActiveSchedule({ body: emptySchedule }))
+  const onCreateNew = () => dispatch(actionSetActiveSchedule({ body: emptySchedule }));
 
   useEffect(() => {
     dispatch(actionGetScheduleList());
+    const socket = io();
+    socket.on("updated", () => dispatch(actionGetScheduleList()));
   }, []);
 
   return (

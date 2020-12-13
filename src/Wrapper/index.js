@@ -1,11 +1,12 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
 import {makeStyles} from "@material-ui/core/styles";
-import {getSchedules} from "../App/mainReducer";
+import {emptySchedule, getSchedules} from "../App/mainReducer";
 import Empty from "../Empty";
 import ScheduleList from "../ScheduleList";
 import Editor from "../Editor";
+import {actionGetScheduleList, actionSetActiveSchedule} from "../App/actions";
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -29,6 +30,12 @@ const useStyles = makeStyles(() => ({
 const Wrapper = ({ className }) => {
   const classes = useStyles();
   const schedules = useSelector(getSchedules);
+  const dispatch = useDispatch();
+  const onCreateNew = () => dispatch(actionSetActiveSchedule({ body: emptySchedule }))
+
+  useEffect(() => {
+    dispatch(actionGetScheduleList());
+  }, []);
 
   return (
       <div className={cn({ [classes.wrapper]: true, [className]: className })}>
@@ -37,8 +44,8 @@ const Wrapper = ({ className }) => {
         </div>
         <div className={classes.container}>
           {schedules.length > 0
-              ? (<ScheduleList/>)
-              : (<Empty/>)
+              ? (<ScheduleList onCreateNew={onCreateNew}/>)
+              : (<Empty onCreateNew={onCreateNew}/>)
           }
         </div>
       </div>)

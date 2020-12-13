@@ -118,15 +118,14 @@ const FormHandler = ({ value }) => {
               {schedule.time.value.map((time, id) => (
                   <Grid key={`${time}#${id}`} item lg={3} md={4} sm={6} xs={12}>
                     <CustomInput type="time"
-                                 inputProps={{ step: 300 }}
-                                 value={time}
-                                 onChange={schedule.time.onChange}/>
+                                 inputProps={{ step: 300, onChange: schedule.time.onChange }}
+                                 value={time}/>
                   </Grid>
               ))}
               <Grid key="button#$" item lg={3} md={4} sm={6} xs={12}>
                 <CustomInput type="button"
                              value="+"
-                             onClick={schedule.time.addTime}/>
+                             inputProps={{ onClick: schedule.time.addTime }}/>
               </Grid>
             </Grid>
           </React.Fragment>

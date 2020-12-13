@@ -122,16 +122,18 @@ const schedules = [
   }
 ]
 
+export const emptySchedule = {
+  name: "",
+  description: "",
+  trigger: { id: null, option: null },
+  mandatory: { state: false },
+  recurrence: { state: false },
+  surveys: []
+}
+
 const initialMainReducer = {
-  activeSchedule: {
-    name: "",
-    description: "",
-    trigger: { id: null },
-    mandatory: { state: false },
-    recurrence: { state: false },
-    surveys: []
-  },
-  schedules: schedules,
+  activeSchedule: emptySchedule,
+  schedules: [], //schedules,
   triggers: [
     {
       id: 1,
@@ -208,9 +210,10 @@ const initialMainReducer = {
   ],
 }
 
+
 export const mainReducer = (state = initialMainReducer, action) => {
   switch (action.type) {
-    case "GET_SCHEDULES_SUCCESS":
+    case ScheduleActions.GET_SCHEDULE_LIST_OK:
       return { ...state, schedules: action.payload.body }
     case ScheduleActions.SET_ACTIVE_SCHEDULE:
       return { ...state, activeSchedule: action.payload.body }

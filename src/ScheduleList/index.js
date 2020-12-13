@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ScheduleList = () => {
+const ScheduleList = ({ onCreateNew }) => {
   const classes = useStyles();
   const { data, onClickSchedule } = useScheduleList();
 
@@ -40,7 +40,7 @@ const ScheduleList = () => {
             <Grid item xs={12}>
               <div className={classes.header}>
                 <span>{`Schedules(${data.length})`}</span>
-                <Button variant="contained" className={classes.button} onClick={() => console.log('ll')}>
+                <Button variant="contained" className={classes.button} onClick={onCreateNew}>
                   Create new
                 </Button>
               </div>

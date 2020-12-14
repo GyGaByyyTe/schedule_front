@@ -14,8 +14,10 @@ const useEditor = () => {
   const getInit = (schedule) => init(schedule, triggers, deadlines, surveysList);
   const initSchedule = getInit(activeSchedule);
   const [name, setName] = useState(initSchedule.name);
+  const [nameError, setNameError] = useState({ value: false, text: "Field must not be empty" });
   const [description, setDescription] = useState(initSchedule.description);
   const [trigger, setTrigger] = useState(initSchedule.trigger);
+  const [triggerError, setTriggerError] = useState({ value: false, text: "Field must not be empty" });
   const [triggerExtension, setTriggerExtension] = useState(initSchedule.triggerExtension);
   const [triggerExtensionLabel, setTriggerExtensionLabel] = useState(initSchedule.triggerExtensionLabel);
   const [mandatory, setMandatory] = useState(initSchedule.mandatory);
@@ -29,8 +31,10 @@ const useEditor = () => {
   useEffect(() => {
     const newSchedule = getInit(activeSchedule);
     setName(newSchedule.name);
+    setNameError(prevState => ({ text: prevState.text, value: false }));
     setDescription(newSchedule.description);
     setTrigger(newSchedule.trigger);
+    setTriggerError(prevState => ({ text: prevState.text, value: false }));
     setMandatory(newSchedule.mandatory);
     setDeadline(newSchedule.deadline);
     setRecurrence(newSchedule.recurrence);
@@ -49,36 +53,52 @@ const useEditor = () => {
       });
       setTriggerExtension(newSchedule.triggerExtension);
       setTriggerExtensionLabel(newSchedule.triggerExtensionLabel);
+      if (triggerError.value) {
+        setTriggerError({ ...triggerError, value: false });
+      }
     }
   }, [trigger, triggers, deadlines, surveysList, activeSchedule])
+
+  useEffect(() => {
+    if (nameError.value) {
+      setNameError({ ...nameError, value: false });
+    }
+  }, [name]);
 
   const onClose = () => dispatch(actionSetActiveSchedule({ body: { ...activeSchedule, id: null } }));
 
   const onSave = () => {
-    const newSchedule = {
-      ...activeSchedule,
-      name: name,
-      description: description,
-      trigger: {
-        id: trigger.value,
-        option: triggerExtension.value?.value || triggerExtension.value,
-      },
-      mandatory: {
-        state: is(mandatory),
-        deadline: deadline.value,
-      },
-      recurrence: {
-        state: is(recurrence),
-        everyDays: everyDays,
-        times: times,
-      },
-      surveys: surveys.map(s => s.value),
-    }
-    if (activeSchedule.id && activeSchedule.id !== emptySchedule.id) {
-      dispatch(actionEditSchedule(newSchedule));
+    if (!name) {
+      setNameError({ ...nameError, value: true })
+    } else if (!trigger.value) {
+      setTriggerError({ ...nameError, value: true })
+
     } else {
-      delete newSchedule.id;
-      dispatch(actionCreateSchedule(newSchedule));
+      const newSchedule = {
+        ...activeSchedule,
+        name: name,
+        description: description,
+        trigger: {
+          id: trigger.value,
+          option: triggerExtension.value?.value || triggerExtension.value,
+        },
+        mandatory: {
+          state: is(mandatory),
+          deadline: deadline.value,
+        },
+        recurrence: {
+          state: is(recurrence),
+          everyDays: everyDays,
+          times: times,
+        },
+        surveys: surveys.map(s => s.value),
+      }
+      if (activeSchedule.id && activeSchedule.id !== emptySchedule.id) {
+        dispatch(actionEditSchedule(newSchedule));
+      } else {
+        delete newSchedule.id;
+        dispatch(actionCreateSchedule(newSchedule));
+      }
     }
   }
 
@@ -96,6 +116,7 @@ const useEditor = () => {
       name: {
         value: name,
         onChange: handleInputChange(setName),
+        error: nameError,
       },
       description: {
         value: description,
@@ -105,6 +126,7 @@ const useEditor = () => {
         options: useMemo(() => [defaultOption, ...triggers.map(t => ({ title: t.name, value: t.id }))], [triggers]),
         value: trigger,
         onChange: (newValue) => setTrigger(checkNewSelectValue(newValue)),
+        error: triggerError,
       },
       triggerExtension: {
         label: triggerExtensionLabel,

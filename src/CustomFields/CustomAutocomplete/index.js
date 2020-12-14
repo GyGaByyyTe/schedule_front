@@ -27,7 +27,12 @@ const CustomAutocomplete = ({ id, model, multiple = false }) => {
       getOptionLabel={(option) => option.title}
       onChange={(event, newValue) => model.onChange(newValue)}
       getOptionSelected={(option, newValue) => option?.value === newValue?.value}
-      renderInput={(params) => <TextField {...params} classes={textClasses} variant="outlined"/>}
+      renderInput={(params) =>
+          <TextField {...params}
+                     classes={textClasses}
+                     error={model.error?.value}
+                     helperText={model.error?.value ? model.error?.text : null}
+                     variant="outlined"/>}
       size={multiple ? "small" : null}
       multiple={multiple}
       limitTags={1}

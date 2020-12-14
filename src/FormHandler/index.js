@@ -67,6 +67,8 @@ const FormHandler = ({ tabValue, schedule }) => {
           <CustomLabel id="name" text="Schedule Name" required/>
           <CustomInput id="name"
                        required
+                       error={schedule.name.error.value}
+                       helperText={schedule.name.error.value ? schedule.name.error.text : null}
                        value={schedule.name.value}
                        onChange={schedule.name.onChange}/>
 

@@ -23,7 +23,7 @@ export const init = (schedule, triggerArray = [], deadlineArray = [], surveyArra
   const triggerExtensionLabel = triggerExtension?.label || "";
   const isMandatory = schedule.mandatory.state;
   const deadline = isMandatory && deadlineArray.find(d => d.id === schedule.mandatory.deadline);
-  const surveys = schedule.surveys?.length ? schedule.surveys.map(s => fillOption(surveyArray.find(sv => sv.id === s))) : null;
+  const surveys = schedule.surveys?.length ? schedule.surveys.map(s => fillOption(surveyArray.find(sv => sv.id === s))) : [];
   return {
     name: schedule.name || "",
     description: schedule.description || "",
@@ -35,7 +35,7 @@ export const init = (schedule, triggerArray = [], deadlineArray = [], surveyArra
     recurrence: schedule.recurrence.state ? "true" : "false",
     everyDays: schedule.recurrence.everyDays || "",
     times: schedule.recurrence.times || [],
-    surveys: surveys || [],
+    surveys: surveys,
   }
 };
 

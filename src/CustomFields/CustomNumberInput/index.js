@@ -4,10 +4,12 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useInputStyles = makeStyles(() => ({
-  input: {
-    borderTopRightRadius: "0 !important",
-    borderBottomRightRadius: "0 !important",
-    borderRight: "transparent !important",
+  root: {
+    "& input": {
+      borderTopRightRadius: "0 !important",
+      borderBottomRightRadius: "0 !important",
+      borderRight: "transparent !important",
+    }
   },
 }));
 const useEndStyles = makeStyles(() => ({
@@ -30,7 +32,9 @@ const CustomNumberInput = ({ id, model }) => {
   return <CustomInput id={id}
                       classes={inputClasses}
                       inputProps={{ min: "0", step: "1" }}
-                      endAdornment={<InputAdornment classes={endClasses} position="end">Days</InputAdornment>}
+                      InputProps={{
+                        endAdornment: <InputAdornment classes={endClasses} position="end">Days</InputAdornment>,
+                      }}
                       type="number"
                       value={model.value}
                       onChange={model.onChange}/>

@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
 import {makeStyles} from "@material-ui/core/styles";
-import {emptySchedule, getSchedules} from "../App/mainReducer";
+import {emptySchedule, getActiveSchedule, getSchedules} from "../App/mainReducer";
 import Empty from "../Empty";
 import ScheduleList from "../ScheduleList";
 import Editor from "../Editor";
@@ -20,16 +20,23 @@ const useStyles = makeStyles(() => ({
     overflowY: "scroll",
   },
   sidebar: {
-    minWidth: "40%",
+    width: 0,
+    left: -300,
     maxWidth: 500,
     position: "relative",
     background: "#FAFBFF",
+    transition: "left 0.3s, width 0.3s",
     boxShadow: "0px 0px 60px rgba(39, 52, 109, 0.1)",
+    "&-visible": {
+      width: "40%",
+      left: 0,
+    }
   }
 }));
 
 const Wrapper = ({ className }) => {
   const classes = useStyles();
+  const activeSchedule = useSelector(getActiveSchedule);
   const schedules = useSelector(getSchedules);
   const dispatch = useDispatch();
   const onCreateNew = () => dispatch(actionSetActiveSchedule({ body: emptySchedule }));
@@ -42,7 +49,7 @@ const Wrapper = ({ className }) => {
 
   return (
       <div className={cn({ [classes.wrapper]: true, [className]: className })}>
-        <div className={classes.sidebar}>
+        <div className={cn({ [classes.sidebar]: true, [`${classes.sidebar}-visible`]: activeSchedule.id })}>
           <Editor/>
         </div>
         <div className={classes.container}>

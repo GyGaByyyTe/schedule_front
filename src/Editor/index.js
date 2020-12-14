@@ -48,12 +48,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FAFBFF",
   },
   button: {
+    marginLeft: "10px",
+    padding: "8px 15px",
+    lineHeight: "12px",
     background: "none",
-    borderRadius: 0,
-    borderBottom: "1px solid #E5E6EC",
-    borderRight: "1px solid #E5E6EC",
+    borderRadius: 5,
+    border: "1px solid #E5E6EC",
+    textTransform: "none",
     boxShadow: "none",
     color: "rgb(165,170,193)",
+    "&-blue": {
+      background: "#2B63FF",
+      color: "white",
+    },
+    "&-header": {
+      margin: 0,
+      borderRadius: 0,
+    }
   },
   content: {
     width: "100%",
@@ -73,12 +84,14 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   footer: {
+    width: "100%",
+    padding: "10px 20px",
+    boxSizing: "border-box",
     position: "absolute",
     bottom: 0,
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    padding: 0,
     background: "#FAFBFF",
     boxShadow: "inset 0px 1px 0px #E5E6EC"
   }
@@ -91,7 +104,7 @@ const Editor = () => {
   return (
       <div className={classes.editor}>
         <div className={classes.header}>
-          <Button variant="contained" className={classes.button} onClick={onClose}>
+          <Button variant="contained" className={`${classes.button} ${classes.button}-header`} onClick={onClose}>
             X
           </Button>
           <div className={classes.content}>
@@ -107,7 +120,8 @@ const Editor = () => {
         </div>
         <div className={classes.footer}>
           <Button variant="contained" className={classes.button} onClick={onClose}>Close</Button>
-          <Button variant="contained" className={classes.button} onClick={onSave}>Save changes</Button>
+          <Button variant="contained" className={`${classes.button} ${classes.button}-blue`} onClick={onSave}>Save
+            changes</Button>
         </div>
       </div>
   );

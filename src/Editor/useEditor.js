@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getActiveSchedule, getDeadlines, getTriggers} from "../App/mainReducer";
 import {checkNewSelectValue, defaultOption, init, is} from "./utils";
-import {actionCreateSchedule, actionEditSchedule} from "../App/actions";
+import {actionCreateSchedule, actionEditSchedule, actionSetActiveSchedule} from "../App/actions";
 
 
 const useEditor = () => {
@@ -48,7 +48,7 @@ const useEditor = () => {
     }
   }, [trigger, triggers, deadlines, activeSchedule])
 
-  const onClose = () => console.log('close editor')
+  const onClose = () => dispatch(actionSetActiveSchedule({ body: { ...activeSchedule, id: null } }));
 
   const onSave = () => {
     const newSchedule = {

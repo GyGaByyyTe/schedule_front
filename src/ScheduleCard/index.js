@@ -14,12 +14,14 @@ const useStyles = makeStyles(() => ({
     height: 200,
     fontSize: 10,
     color: "#27346D",
-    boxShadow: "0px 4px 0px 0px rgba(43,99,255,1)," +
-        "0px 8px 0px 0px rgba(43,99,255,0.5)",
-    // boxShadow: "0px 4px 0px 0px rgba(255,255,255,.5)," +
-    //     "0px 8px 0px 0px rgba(255,255,255,0.2)," +
-    //     "0px 20px 60px -20px rgba(39, 52, 109, 0.1)",
-    "& *":{
+    boxShadow: "0px 4px 0px 0px rgba(255,255,255,.5)," +
+        "0px 8px 0px 0px rgba(255,255,255,0.2)," +
+        "0px 20px 60px -20px rgba(39, 52, 109, 0.1)",
+    "&-active": {
+      boxShadow: "0px 4px 0px 0px rgba(43,99,255,1)," +
+          "0px 8px 0px 0px rgba(43,99,255,0.5)",
+    },
+    "& *": {
       padding: "0 10px 0 10px",
     }
   },
@@ -67,10 +69,10 @@ const useStyles = makeStyles(() => ({
 
 const ScheduleCard = ({ item, className }) => {
   const classes = useStyles();
-  const { model } = useScheduleCard({ schedule: item });
+  const { isActive, model } = useScheduleCard({ schedule: item });
 
   return (
-      <Paper className={cn({ [classes.card]: true, [className]: className })}>
+      <Paper className={cn({ [classes.card]: true, [`${classes.card}-active`]: isActive, [className]: className })}>
         <p className={classes.name}>
           {model.name}
         </p>

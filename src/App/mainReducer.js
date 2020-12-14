@@ -123,6 +123,7 @@ const schedules = [
 ]
 
 export const emptySchedule = {
+  id: "init",
   name: "",
   description: "",
   trigger: { id: null, option: null },
@@ -132,7 +133,7 @@ export const emptySchedule = {
 }
 
 const initialMainReducer = {
-  activeSchedule: emptySchedule,
+  activeSchedule: { ...emptySchedule, id: null },
   schedules: [], //schedules,
   triggers: [
     {

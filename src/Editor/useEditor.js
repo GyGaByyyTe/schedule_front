@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getActiveSchedule, getDeadlines, getTriggers} from "../App/mainReducer";
+import {emptySchedule, getActiveSchedule, getDeadlines, getSurveysList, getTriggers} from "../App/mainReducer";
 import {checkNewSelectValue, defaultOption, init, is} from "./utils";
 import {actionCreateSchedule, actionEditSchedule, actionSetActiveSchedule} from "../App/actions";
 
@@ -10,7 +10,9 @@ const useEditor = () => {
   const activeSchedule = useSelector(getActiveSchedule);
   const triggers = useSelector(getTriggers);
   const deadlines = useSelector(getDeadlines);
-  const initSchedule = init(activeSchedule, triggers, deadlines);
+  const surveysList = useSelector(getSurveysList);
+  const getInit = (schedule) => init(schedule, triggers, deadlines, surveysList);
+  const initSchedule = getInit(activeSchedule);
   const [name, setName] = useState(initSchedule.name);
   const [description, setDescription] = useState(initSchedule.description);
   const [trigger, setTrigger] = useState(initSchedule.trigger);
@@ -21,10 +23,11 @@ const useEditor = () => {
   const [recurrence, setRecurrence] = useState(initSchedule.recurrence);
   const [everyDays, setEveryDays] = useState(initSchedule.everyDays);
   const [times, setTimes] = useState(initSchedule.times);
+  const [surveys, setSurveys] = useState(initSchedule.surveys);
   const [tabValue, setTabValue] = React.useState(0);
 
   useEffect(() => {
-    const newSchedule = init(activeSchedule, triggers, deadlines);
+    const newSchedule = getInit(activeSchedule);
     setName(newSchedule.name);
     setDescription(newSchedule.description);
     setTrigger(newSchedule.trigger);
@@ -33,20 +36,21 @@ const useEditor = () => {
     setRecurrence(newSchedule.recurrence);
     setEveryDays(newSchedule.everyDays);
     setTimes(newSchedule.times);
-  }, [activeSchedule, triggers, deadlines])
+    setSurveys(newSchedule.surveys);
+  }, [activeSchedule, triggers, deadlines, surveysList])
 
   useEffect(() => {
     if (trigger) {
-      const newSchedule = init({
+      const newSchedule = getInit({
         ...activeSchedule, trigger: {
           id: trigger.value,
           option: activeSchedule.trigger.option || 0
         }
-      }, triggers, deadlines);
+      });
       setTriggerExtension(newSchedule.triggerExtension);
       setTriggerExtensionLabel(newSchedule.triggerExtensionLabel);
     }
-  }, [trigger, triggers, deadlines, activeSchedule])
+  }, [trigger, triggers, deadlines, surveysList, activeSchedule])
 
   const onClose = () => dispatch(actionSetActiveSchedule({ body: { ...activeSchedule, id: null } }));
 
@@ -67,12 +71,13 @@ const useEditor = () => {
         state: is(recurrence),
         everyDays: everyDays,
         times: times,
-      }
+      },
+      surveys: surveys.map(s => s.value),
     }
-    console.log(newSchedule)
-    if (activeSchedule.id) {
+    if (activeSchedule.id && activeSchedule.id !== emptySchedule.id) {
       dispatch(actionEditSchedule(newSchedule));
     } else {
+      delete newSchedule.id;
       dispatch(actionCreateSchedule(newSchedule));
     }
   }
@@ -154,7 +159,16 @@ const useEditor = () => {
           hour: "numeric",
           minute: "numeric"
         })])
-      }
+      },
+      surveys: {
+        value: surveys,
+        options: useMemo(() => [defaultOption, ...surveysList.map(d => ({
+          title: d.name,
+          value: d.id
+        }))], [surveysList]),
+        onChange: setSurveys,
+        remove: (id) => () => setSurveys(surveys.filter((_, index) => index !== id))
+      },
     },
     tabValue,
     handleTabChange,

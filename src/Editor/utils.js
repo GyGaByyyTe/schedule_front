@@ -17,12 +17,13 @@ export const getTriggerExtension = (trigger, schedule) => {
   }
 }
 
-export const init = (schedule, triggerArray = [], deadlineArray = []) => {
+export const init = (schedule, triggerArray = [], deadlineArray = [], surveyArray = []) => {
   const trigger = triggerArray.find(t => t.id === schedule.trigger.id);
   const triggerExtension = trigger?.select || trigger?.number || null;
   const triggerExtensionLabel = triggerExtension?.label || "";
   const isMandatory = schedule.mandatory.state;
   const deadline = isMandatory && deadlineArray.find(d => d.id === schedule.mandatory.deadline);
+  const surveys = schedule.surveys?.length ? schedule.surveys.map(s => fillOption(surveyArray.find(sv => sv.id === s))) : null;
   return {
     name: schedule.name || "",
     description: schedule.description || "",
@@ -34,6 +35,7 @@ export const init = (schedule, triggerArray = [], deadlineArray = []) => {
     recurrence: schedule.recurrence.state ? "true" : "false",
     everyDays: schedule.recurrence.everyDays || "",
     times: schedule.recurrence.times || [],
+    surveys: surveys || [],
   }
 };
 

@@ -12,6 +12,9 @@ import CustomNumberInput from "../CustomFields/CustomNumberInput";
 import Grid from "@material-ui/core/Grid";
 import CustomLabel from "../CustomFields/CustomLabel";
 import "./index.css";
+import {FormControl} from "@material-ui/core";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import CustomCheap from "../CustomFields/CustomCheap";
 
 const TabPanel = withStyles((theme) => ({
   root: {
@@ -127,9 +130,18 @@ const FormHandler = ({ tabValue, schedule }) => {
             </Grid>
           </React.Fragment>
           }
+
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
-          Second panelolo
+          <CustomLabel id="surveys" text="Choose surveys"/>
+          <FormControl style={{ width: "100%" }}>
+            <CustomAutocomplete id="surveys" model={schedule.surveys} multiple/>
+            <FormHelperText style={{ fontSize: "10px" }}>
+              You can assign as many Surveys as needed to an Event.
+            </FormHelperText>
+          </FormControl>
+          {schedule.surveys.value.map((s, id) =>
+              <CustomCheap key={`${id}${s.title}`} value={s.title} onClose={schedule.surveys.remove(id)}/>)}
         </TabPanel>
       </div>
   )

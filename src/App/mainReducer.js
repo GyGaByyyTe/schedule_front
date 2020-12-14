@@ -209,6 +209,11 @@ const initialMainReducer = {
     { id: 4, name: "7d" },
     { id: 5, name: "no deadline" },
   ],
+  surveysList: [
+    { id: 1, name: "Short Form Health Survey (SF-36)" },
+    { id: 2, name: "Apetite" },
+    { id: 3, name: "Sleep Apenia Questionnaire" }
+  ]
 }
 
 
@@ -228,3 +233,4 @@ export const getActiveSchedule = (state) => getMainReducer(state).activeSchedule
 export const getSchedules = (state) => getMainReducer(state).schedules;
 export const getTriggers = (state) => getMainReducer(state).triggers;
 export const getDeadlines = (state) => getMainReducer(state).deadlines;
+export const getSurveysList = (state) => getMainReducer(state).surveysList;

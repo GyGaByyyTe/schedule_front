@@ -2,12 +2,13 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
 import {makeStyles} from "@material-ui/core/styles";
+import {SocketEvents} from "../EventHandler/reducer";
+import {eventAddListener, eventRemoveListener, eventSocketConnect} from "../EventHandler/actions";
 import {emptySchedule, getActiveSchedule, getSchedules} from "../App/mainReducer";
+import {actionGetScheduleList, actionSetActiveSchedule} from "../App/actions";
 import Empty from "../Empty";
 import ScheduleList from "../ScheduleList";
 import Editor from "../Editor";
-import {actionGetScheduleList, actionSetActiveSchedule} from "../App/actions";
-import io from 'socket.io-client';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -42,10 +43,16 @@ const Wrapper = ({ className }) => {
   const onCreateNew = () => dispatch(actionSetActiveSchedule({ body: emptySchedule }));
 
   useEffect(() => {
+    dispatch(eventAddListener({ event: SocketEvents.UPDATE, handler: onScheduleUpdate }))
+
     dispatch(actionGetScheduleList());
-    const socket = io();
-    socket.on("updated", () => dispatch(actionGetScheduleList()));
+    dispatch(eventSocketConnect());
+
+    return () => dispatch(eventRemoveListener({ event: SocketEvents.UPDATE }));
+
   }, []);
+
+  const onScheduleUpdate = () => dispatch(actionGetScheduleList());
 
   return (
       <div className={cn({ [classes.wrapper]: true, [className]: className })}>
